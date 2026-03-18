@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MindSpace - Self-Care & Myths</title>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital@0;1&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Poppins', sans-serif; background: #ffffff; color: #1a1a1a; }
+
+    /* ── NAV ── */
+    nav { background: #ffffff; border-bottom: 2px solid #e8f5f2; padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 65px; position: sticky; top: 0; z-index: 100; }
+    .logo { font-family: 'Merriweather', serif; font-size: 1.4rem; color: #1a1a1a; text-decoration: none; }
+    .logo span { color: #2e7d62; }
+    nav ul { list-style: none; display: flex; gap: 8px; }
+    nav ul a { text-decoration: none; color: #555; font-size: 0.875rem; font-weight: 500; padding: 7px 16px; border-radius: 25px; transition: background 0.2s, color 0.2s; }
+    nav ul a:hover { background: #e8f5f2; color: #2e7d62; }
+    nav ul a.active { background: #2e7d62; color: #fff; }
+
+    /* ── PAGE HEADER ── */
+    .page-header { background: linear-gradient(135deg, #f0faf6 0%, #e8f5f2 100%); padding: 60px 40px 50px; border-bottom: 2px solid #e0ede9; }
+    .breadcrumb { font-size: 0.8rem; color: #999; margin-bottom: 14px; }
+    .breadcrumb a { color: #2e7d62; text-decoration: none; }
+    .page-header h1 { font-family: 'Merriweather', serif; font-size: 2.5rem; line-height: 1.25; margin-bottom: 14px; }
+    .page-header h1 em { font-style: italic; color: #2e7d62; }
+    .page-header p { font-size: 1rem; color: #666; font-weight: 300; max-width: 520px; line-height: 1.8; }
+
+    /* ── SECTIONS ── */
+    section { padding: 60px 40px; }
+    .section-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #2e7d62; margin-bottom: 10px; display: block; }
+    .section-title { font-family: 'Merriweather', serif; font-size: 1.8rem; color: #1a1a1a; margin-bottom: 12px; line-height: 1.3; }
+    .section-desc { font-size: 0.95rem; color: #666; font-weight: 300; max-width: 560px; line-height: 1.8; margin-bottom: 36px; }
+
+    /* ── TIPS ── */
+    .tips-section { background: #fff; }
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .tip-card {
+      background: #f9fdfb;
+      border: 1px solid #e0ede9;
+      border-radius: 14px;
+      padding: 24px;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .tip-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); transform: translateY(-3px); }
+    .tip-num { font-family: 'Merriweather', serif; font-size: 2rem; color: #c8e2db; display: block; line-height: 1; margin-bottom: 4px; }
+    .tip-icon { font-size: 1.4rem; display: block; margin-bottom: 8px; }
+    .tip-card h4 { font-size: 0.95rem; font-weight: 600; color: #1a1a1a; margin-bottom: 8px; }
+    .tip-card p { font-size: 0.85rem; color: #666; line-height: 1.7; font-weight: 300; }
+
+    /* ── QUOTE BANNER ── */
+    .quote-banner {
+      background: #2e7d62;
+      padding: 70px 40px;
+      text-align: center;
+    }
+    .quote-text { font-family: 'Merriweather', serif; font-size: 2rem; font-style: italic; color: #fff; max-width: 680px; margin: 0 auto 16px; line-height: 1.4; }
+    .quote-author { font-size: 0.85rem; color: rgba(255,255,255,0.6); letter-spacing: 0.08em; text-transform: uppercase; }
+
+    /* ── ROUTINE TABLE ── */
+    .routine-section { background: #f9fdfb; }
+    .table-wrap { overflow-x: auto; margin-top: 10px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+    thead th { background: #2e7d62; color: #fff; padding: 13px 16px; text-align: left; font-weight: 500; font-size: 0.8rem; }
+    thead th:first-child { border-radius: 10px 0 0 0; }
+    thead th:last-child { border-radius: 0 10px 0 0; }
+    tbody tr { border-bottom: 1px solid #e0ede9; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #f0faf6; }
+    td { padding: 13px 16px; color: #555; vertical-align: top; line-height: 1.6; }
+    td:first-child { font-weight: 600; color: #2e7d62; white-space: nowrap; }
+
+    /* ── MYTHS ── */
+    .myths-section { background: #fff; }
+    .myths-list { display: flex; flex-direction: column; gap: 16px; }
+    .myth-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .myth-box {
+      background: #fff5f5;
+      border: 1px solid #fcc;
+      border-radius: 14px;
+      padding: 20px;
+    }
+    .myth-box .label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #c0392b; margin-bottom: 8px; display: block; }
+    .myth-box p { font-size: 0.875rem; color: #555; line-height: 1.7; }
+
+    .fact-box {
+      background: #f0faf6;
+      border: 1px solid #c3d9d4;
+      border-radius: 14px;
+      padding: 20px;
+    }
+    .fact-box .label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #2e7d62; margin-bottom: 8px; display: block; }
+    .fact-box p { font-size: 0.875rem; color: #555; line-height: 1.7; }
+
+    /* ── CTA BANNER ── */
+    .cta-banner { background: #1a1a1a; padding: 55px 40px; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
+    .cta-banner h2 { font-family: 'Merriweather', serif; font-size: 1.6rem; color: #fff; max-width: 480px; line-height: 1.4; }
+    .btn-white { display: inline-block; background: #fff; color: #1a1a1a; padding: 13px 28px; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: transform 0.2s; }
+    .btn-white:hover { transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer { background: #1a1a1a; border-top: 1px solid #2a2a2a; color: rgba(255,255,255,0.5); padding: 35px 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-size: 0.85rem; }
+    .footer-logo { font-family: 'Merriweather', serif; font-size: 1.2rem; color: #fff; }
+    .footer-logo span { color: #5dbfa0; }
+    footer ul { list-style: none; display: flex; gap: 20px; }
+    footer ul a { color: rgba(255,255,255,0.45); text-decoration: none; font-size: 0.82rem; }
+    footer ul a:hover { color: #fff; }
+
+    /* ===== RWD - RESPONSIVE WEB DESIGN ===== */
+ 
+    /* Tablet (<=1024px) */
+    @media (max-width: 1024px) {
+      .card-grid      { grid-template-columns: repeat(2, 1fr); }
+      .pillars-grid   { grid-template-columns: repeat(2, 1fr); }
+      .tips-grid      { grid-template-columns: repeat(2, 1fr); }
+      .helplines-grid { grid-template-columns: repeat(2, 1fr); }
+      .explore-grid   { grid-template-columns: repeat(2, 1fr); }
+      .factors-grid   { grid-template-columns: repeat(2, 1fr); }
+    }
+ 
+    /* Mobile (<=768px) */
+    @media (max-width: 768px) {
+      nav { flex-wrap: wrap; height: auto; padding: 14px 20px; gap: 10px; }
+      nav ul { flex-wrap: wrap; gap: 6px; width: 100%; }
+      nav ul a { font-size: 0.78rem; padding: 5px 12px; }
+ 
+      section, .page-header, .quote-banner,
+      .cta-banner, .stats-bar, .emergency,
+      .hero { padding-left: 20px; padding-right: 20px; }
+ 
+      .hero { padding-top: 50px; padding-bottom: 40px; }
+      .hero h1 { font-size: clamp(1.8rem, 7vw, 2.5rem); }
+      .page-header h1 { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+      .section-title { font-size: clamp(1.4rem, 5vw, 1.8rem); }
+      .quote-text { font-size: clamp(1.2rem, 4vw, 1.8rem); }
+ 
+      .card-grid      { grid-template-columns: 1fr; }
+      .explore-grid   { grid-template-columns: 1fr; }
+      .explore-card.green-card { grid-column: span 1; }
+      .def-grid       { grid-template-columns: 1fr; }
+      .pillars-grid   { grid-template-columns: 1fr; }
+      .factors-grid   { grid-template-columns: 1fr; }
+      .helplines-grid { grid-template-columns: 1fr; }
+      .contact-grid   { grid-template-columns: 1fr; }
+      .myth-row       { grid-template-columns: 1fr; }
+      .detail-body    { grid-template-columns: 1fr; }
+      .form-row       { grid-template-columns: 1fr; }
+      .detail-block   { border-right: none !important; }
+ 
+      .stats-bar  { gap: 24px; flex-direction: column; }
+      .cta-banner { flex-direction: column; text-align: center; }
+      .cta-banner h2 { font-size: 1.3rem; }
+ 
+      footer { flex-direction: column; text-align: center; padding: 28px 20px; }
+      footer ul { justify-content: center; flex-wrap: wrap; }
+    }
+ 
+    /* Small mobile (<=480px) */
+    @media (max-width: 480px) {
+      .tips-grid { grid-template-columns: 1fr; }
+      nav ul a { font-size: 0.72rem; padding: 4px 10px; }
+      .helpline-num { font-size: 0.85rem; padding: 7px 16px; }
+      table { font-size: 0.78rem; }
+      td, th { padding: 10px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="index.html">Mind<span>Space</span></a>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="what.html">What is MH?</a></li>
+    <li><a href="issues.html">Common Issues</a></li>
+    <li><a href="selfcare.html" class="active">Self-Care</a></li>
+    <li><a href="support.html">Get Support</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <div class="breadcrumb"><a href="index.html">Home</a> &rsaquo; Self-Care & Myths</div>
+  <h1>Self-Care &<br><em>Myth Busting</em></h1>
+  <p>Practical daily habits to protect your mental health, a sample daily routine, and the truth behind common mental health myths.</p>
+</div>
+
+<!-- TIPS -->
+<section class="tips-section">
+  <span class="section-label">Self-Care Tips</span>
+  <h2 class="section-title">Small habits, big difference</h2>
+  <p class="section-desc">You don't need to overhaul your entire life. Small, consistent actions done regularly can meaningfully improve your mental health.</p>
+  <div class="tips-grid">
+    <div class="tip-card">
+      <span class="tip-icon">🗣️</span>
+      <span class="tip-num">01</span>
+      <h4>Talk to Someone</h4>
+      <p>Sharing your feelings with a trusted person — friend, family, or counsellor — can lift a huge weight off your mind.</p>
+    </div>
+    <div class="tip-card">
+      <span class="tip-icon">🏃</span>
+      <span class="tip-num">02</span>
+      <h4>Stay Physically Active</h4>
+      <p>Even a 30-minute walk releases endorphins — natural mood boosters. Exercise is one of the most effective free mental health tools.</p>
+    </div>
+    <div class="tip-card">
+      <span class="tip-icon">📵</span>
+      <span class="tip-num">03</span>
+      <h4>Limit Social Media</h4>
+      <p>Constant comparison and negative news worsen anxiety. Set screen time limits and take regular digital detox days.</p>
+    </div>
+    <div class="tip-card">
+      <span class="tip-icon">😴</span>
+      <span class="tip-num">04</span>
+      <h4>Sleep & Eat Well</h4>
+      <p>7–9 hours of sleep and a balanced diet are the biological foundation of mental health. Don't underestimate them.</p>
+    </div>
+    <div class="tip-card">
+      <span class="tip-icon">🧘</span>
+      <span class="tip-num">05</span>
+      <h4>Practice Mindfulness</h4>
+      <p>Even 5–10 minutes of mindful breathing daily can calm the nervous system and reduce anxiety significantly.</p>
+    </div>
+    <div class="tip-card">
+      <span class="tip-icon">📝</span>
+      <span class="tip-num">06</span>
+      <h4>Journal Your Thoughts</h4>
+      <p>Writing down worries, gratitude, or reflections helps process emotions and gain perspective. Just be honest.</p>
+    </div>
+    <div class="tip-card">
+      <span class="tip-icon">🎨</span>
+      <span class="tip-num">07</span>
+      <h4>Do What You Love</h4>
+      <p>Hobbies — music, art, reading, sports — restore energy and provide joy. They are not luxuries; they are necessary.</p>
+    </div>
+    <div class="tip-card">
+      <span class="tip-icon">🌿</span>
+      <span class="tip-num">08</span>
+      <h4>Spend Time in Nature</h4>
+      <p>Even 20 minutes outdoors measurably reduces stress hormones and improves mood, according to multiple studies.</p>
+    </div>
+    <div class="tip-card">
+      <span class="tip-icon">👨‍⚕️</span>
+      <span class="tip-num">09</span>
+      <h4>Seek Professional Help</h4>
+      <p>There is no shame in seeing a therapist or counsellor. Mental health professionals are trained to guide you.</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE BANNER -->
+<div class="quote-banner">
+  <p class="quote-text">"There is no health without mental health."</p>
+  <span class="quote-author">— World Health Organization</span>
+</div>
+
+<!-- DAILY ROUTINE TABLE -->
+<section class="routine-section">
+  <span class="section-label">Daily Routine</span>
+  <h2 class="section-title">A healthy mental health day</h2>
+  <p class="section-desc">Use this as inspiration — you don't need to follow it exactly. Even adopting 3–4 of these habits can make a real difference.</p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Time of Day</th>
+          <th>Activity</th>
+          <th>Why It Helps</th>
+          <th>Duration</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Morning</td><td>No phone for first 30 mins</td><td>Reduces anxiety, sets calm tone for the day</td><td>30 min</td></tr>
+        <tr><td>Morning</td><td>Light exercise or walk</td><td>Releases endorphins, improves energy and focus</td><td>20–30 min</td></tr>
+        <tr><td>Morning</td><td>Healthy breakfast</td><td>Stabilizes blood sugar, improves mood and concentration</td><td>15 min</td></tr>
+        <tr><td>Daytime</td><td>Study in focused blocks</td><td>Reduces overwhelm, builds sense of achievement</td><td>45–90 min blocks</td></tr>
+        <tr><td>Daytime</td><td>Short breaks between tasks</td><td>Prevents burnout, maintains performance</td><td>5–10 min</td></tr>
+        <tr><td>Afternoon</td><td>Connect with someone</td><td>Fulfills social need, reduces loneliness</td><td>15–30 min</td></tr>
+        <tr><td>Evening</td><td>Hobby or creative activity</td><td>Restores energy, provides joy and flow</td><td>30–60 min</td></tr>
+        <tr><td>Evening</td><td>Journaling or reflection</td><td>Processes the day, clears mental clutter before sleep</td><td>10 min</td></tr>
+        <tr><td>Night</td><td>Screen-free wind-down</td><td>Prepares brain for quality sleep</td><td>30 min before bed</td></tr>
+        <tr><td>Night</td><td>7–9 hours of sleep</td><td>Restores brain function, emotional regulation, and memory</td><td>7–9 hours</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- MYTHS VS FACTS -->
+<section class="myths-section">
+  <span class="section-label">Busting Stigma</span>
+  <h2 class="section-title">Myths vs Facts</h2>
+  <p class="section-desc">Misinformation creates stigma. Stigma stops people from seeking help. Let's replace the most harmful myths with facts.</p>
+  <div class="myths-list">
+    <div class="myth-row">
+      <div class="myth-box">
+        <span class="label">❌ Myth</span>
+        <p>Mental health problems are a sign of personal weakness or a character flaw.</p>
+      </div>
+      <div class="fact-box">
+        <span class="label">✅ Fact</span>
+        <p>Mental illness has biological, psychological, and social causes — just like physical illness. It has nothing to do with weakness.</p>
+      </div>
+    </div>
+    <div class="myth-row">
+      <div class="myth-box">
+        <span class="label">❌ Myth</span>
+        <p>You can just "snap out of it" or "think positive" to overcome mental illness.</p>
+      </div>
+      <div class="fact-box">
+        <span class="label">✅ Fact</span>
+        <p>Mental health conditions are medical conditions. Willpower alone is not a treatment — professional help matters.</p>
+      </div>
+    </div>
+    <div class="myth-row">
+      <div class="myth-box">
+        <span class="label">❌ Myth</span>
+        <p>People with mental illness are dangerous, violent, or unpredictable.</p>
+      </div>
+      <div class="fact-box">
+        <span class="label">✅ Fact</span>
+        <p>The vast majority of people with mental illness are not violent. They are far more likely to be victims of crime than perpetrators.</p>
+      </div>
+    </div>
+    <div class="myth-row">
+      <div class="myth-box">
+        <span class="label">❌ Myth</span>
+        <p>Therapy is only for people who are "crazy" or severely ill.</p>
+      </div>
+      <div class="fact-box">
+        <span class="label">✅ Fact</span>
+        <p>Therapy helps everyone — from managing daily stress to serious conditions. It's a proactive, healthy choice, not a last resort.</p>
+      </div>
+    </div>
+    <div class="myth-row">
+      <div class="myth-box">
+        <span class="label">❌ Myth</span>
+        <p>Children and teenagers don't experience real mental health problems.</p>
+      </div>
+      <div class="fact-box">
+        <span class="label">✅ Fact</span>
+        <p>Half of all mental health conditions begin by age 14. Young people experience real distress that deserves to be taken seriously.</p>
+      </div>
+    </div>
+    <div class="myth-row">
+      <div class="myth-box">
+        <span class="label">❌ Myth</span>
+        <p>Once you have a mental illness, it's permanent and you'll never recover.</p>
+      </div>
+      <div class="fact-box">
+        <span class="label">✅ Fact</span>
+        <p>With the right support and treatment, people recover from mental illness and live full, productive, meaningful lives.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-banner">
+  <h2>Need immediate support? Find helplines and reach out.</h2>
+  <a href="support.html" class="btn-white">Get Support →</a>
+</div>
+
+<footer>
+  <span class="footer-logo">Mind<span>Space</span></span>
+  <span>© 2025 MindSpace — Mental Health Awareness Project</span>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="what.html">About MH</a></li>
+    <li><a href="issues.html">Issues</a></li>
+    <li><a href="support.html">Support</a></li>
+  </ul>
+</footer>
+
+</body>
+</html>

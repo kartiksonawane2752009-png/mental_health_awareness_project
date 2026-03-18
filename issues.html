@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MindSpace - Common Issues</title>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital@0;1&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #ffffff;
+      color: #1a1a1a;
+    }
+
+    /* ── NAV ── */
+    nav { background: #ffffff; border-bottom: 2px solid #e8f5f2; padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 65px; position: sticky; top: 0; z-index: 100; }
+    .logo { font-family: 'Merriweather', serif; font-size: 1.4rem; color: #1a1a1a; text-decoration: none; }
+    .logo span { color: #2e7d62; }
+    nav ul { list-style: none; display: flex; gap: 8px; }
+    nav ul a { text-decoration: none; color: #555; font-size: 0.875rem; font-weight: 500; padding: 7px 16px; border-radius: 25px; transition: background 0.2s, color 0.2s; }
+    nav ul a:hover { background: #e8f5f2; color: #2e7d62; }
+    nav ul a.active { background: #2e7d62; color: #fff; }
+
+    /* ── PAGE HEADER ── */
+    .page-header { background: linear-gradient(135deg, #f0faf6 0%, #e8f5f2 100%); padding: 60px 40px 50px; border-bottom: 2px solid #e0ede9; }
+    .breadcrumb { font-size: 0.8rem; color: #999; margin-bottom: 14px; }
+    .breadcrumb a { color: #2e7d62; text-decoration: none; }
+    .page-header h1 { font-family: 'Merriweather', serif; font-size: 2.5rem; line-height: 1.25; margin-bottom: 14px; }
+    .page-header h1 em { font-style: italic; color: #2e7d62; }
+    .page-header p { font-size: 1rem; color: #666; font-weight: 300; max-width: 520px; line-height: 1.8; }
+
+    /* ── SECTIONS ── */
+    section { padding: 60px 40px; }
+    .section-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #2e7d62; margin-bottom: 10px; display: block; }
+    .section-title { font-family: 'Merriweather', serif; font-size: 1.8rem; color: #1a1a1a; margin-bottom: 12px; line-height: 1.3; }
+    .section-desc { font-size: 0.95rem; color: #666; font-weight: 300; max-width: 560px; line-height: 1.8; margin-bottom: 30px; }
+
+    /* ── TABS ── */
+    .tab-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #e0ede9;
+    }
+
+    .tab-bar a {
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #666;
+      padding: 8px 18px;
+      border-radius: 25px;
+      border: 1px solid #e0ede9;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .tab-bar a:hover { background: #e8f5f2; color: #2e7d62; border-color: #2e7d62; }
+
+    /* CSS :target trick for tabs — default show #tab-all */
+    .tab-panel { display: none; }
+    #tab-all { display: block; }
+    #tab-depression:target, #tab-anxiety:target, #tab-stress:target,
+    #tab-ocd:target, #tab-bipolar:target, #tab-ptsd:target { display: block; }
+    #tab-depression:target ~ #tab-all,
+    #tab-anxiety:target ~ #tab-all,
+    #tab-stress:target ~ #tab-all,
+    #tab-ocd:target ~ #tab-all,
+    #tab-bipolar:target ~ #tab-all,
+    #tab-ptsd:target ~ #tab-all { display: none; }
+
+    /* Highlight active tab using :target */
+    #tab-depression:target ~ .tab-bar a[href="#tab-depression"],
+    #tab-anxiety:target ~ .tab-bar a[href="#tab-anxiety"],
+    #tab-stress:target ~ .tab-bar a[href="#tab-stress"],
+    #tab-ocd:target ~ .tab-bar a[href="#tab-ocd"],
+    #tab-bipolar:target ~ .tab-bar a[href="#tab-bipolar"],
+    #tab-ptsd:target ~ .tab-bar a[href="#tab-ptsd"] {
+      background: #2e7d62; color: #fff; border-color: #2e7d62;
+    }
+
+    /* ── TABLE ── */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+
+    thead th {
+      background: #2e7d62;
+      color: #fff;
+      padding: 14px 16px;
+      text-align: left;
+      font-weight: 500;
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+    }
+    thead th:first-child { border-radius: 10px 0 0 0; }
+    thead th:last-child  { border-radius: 0 10px 0 0; }
+
+    tbody tr { border-bottom: 1px solid #e8ede8; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #f9fdfb; }
+
+    td { padding: 14px 16px; color: #555; line-height: 1.6; vertical-align: top; }
+    td:first-child { font-weight: 600; color: #1a1a1a; white-space: nowrap; }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 500;
+    }
+    .b-mood    { background: #fde8e0; color: #c0392b; }
+    .b-anxiety { background: #fdf3d0; color: #9a6a00; }
+    .b-trauma  { background: #e8e0fd; color: #5e2ba8; }
+    .b-ocd     { background: #e0f0fd; color: #1a6eaa; }
+    .b-common  { background: #e8f5f2; color: #2e7d62; }
+
+    /* ── DETAIL CARD ── */
+    .detail-card {
+      border: 1px solid #e0ede9;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .detail-header {
+      background: #2e7d62;
+      color: #fff;
+      padding: 32px;
+    }
+    .detail-header h2 { font-family: 'Merriweather', serif; font-size: 1.8rem; margin-top: 8px; margin-bottom: 8px; }
+    .detail-header p { font-size: 0.9rem; opacity: 0.8; font-weight: 300; line-height: 1.7; }
+    .detail-tag { background: rgba(255,255,255,0.2); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 500; display: inline-block; }
+
+    .detail-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .detail-block {
+      padding: 24px;
+      border-right: 1px solid #e0ede9;
+      border-bottom: 1px solid #e0ede9;
+    }
+    .detail-block:nth-child(even) { border-right: none; }
+    .detail-block:nth-last-child(-n+2) { border-bottom: none; }
+    .detail-block h4 { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #2e7d62; margin-bottom: 12px; }
+    .detail-block ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .detail-block ul li { font-size: 0.875rem; color: #555; padding-left: 14px; position: relative; line-height: 1.6; }
+    .detail-block ul li::before { content: '•'; color: #2e7d62; position: absolute; left: 0; font-weight: 700; }
+
+    /* ── CTA BANNER ── */
+    .cta-banner { background: #2e7d62; padding: 55px 40px; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
+    .cta-banner h2 { font-family: 'Merriweather', serif; font-size: 1.6rem; color: #fff; max-width: 480px; line-height: 1.4; }
+    .btn-white { display: inline-block; background: #fff; color: #2e7d62; padding: 13px 28px; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: transform 0.2s; }
+    .btn-white:hover { transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer { background: #1a1a1a; color: rgba(255,255,255,0.5); padding: 35px 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-size: 0.85rem; }
+    .footer-logo { font-family: 'Merriweather', serif; font-size: 1.2rem; color: #fff; }
+    .footer-logo span { color: #5dbfa0; }
+    footer ul { list-style: none; display: flex; gap: 20px; }
+    footer ul a { color: rgba(255,255,255,0.45); text-decoration: none; font-size: 0.82rem; }
+    footer ul a:hover { color: #fff; }
+
+    /* ===== RWD - RESPONSIVE WEB DESIGN ===== */
+ 
+    /* Tablet (<=1024px) */
+    @media (max-width: 1024px) {
+      .card-grid      { grid-template-columns: repeat(2, 1fr); }
+      .pillars-grid   { grid-template-columns: repeat(2, 1fr); }
+      .tips-grid      { grid-template-columns: repeat(2, 1fr); }
+      .helplines-grid { grid-template-columns: repeat(2, 1fr); }
+      .explore-grid   { grid-template-columns: repeat(2, 1fr); }
+      .factors-grid   { grid-template-columns: repeat(2, 1fr); }
+    }
+ 
+    /* Mobile (<=768px) */
+    @media (max-width: 768px) {
+      nav { flex-wrap: wrap; height: auto; padding: 14px 20px; gap: 10px; }
+      nav ul { flex-wrap: wrap; gap: 6px; width: 100%; }
+      nav ul a { font-size: 0.78rem; padding: 5px 12px; }
+ 
+      section, .page-header, .quote-banner,
+      .cta-banner, .stats-bar, .emergency,
+      .hero { padding-left: 20px; padding-right: 20px; }
+ 
+      .hero { padding-top: 50px; padding-bottom: 40px; }
+      .hero h1 { font-size: clamp(1.8rem, 7vw, 2.5rem); }
+      .page-header h1 { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+      .section-title { font-size: clamp(1.4rem, 5vw, 1.8rem); }
+      .quote-text { font-size: clamp(1.2rem, 4vw, 1.8rem); }
+ 
+      .card-grid      { grid-template-columns: 1fr; }
+      .explore-grid   { grid-template-columns: 1fr; }
+      .explore-card.green-card { grid-column: span 1; }
+      .def-grid       { grid-template-columns: 1fr; }
+      .pillars-grid   { grid-template-columns: 1fr; }
+      .factors-grid   { grid-template-columns: 1fr; }
+      .helplines-grid { grid-template-columns: 1fr; }
+      .contact-grid   { grid-template-columns: 1fr; }
+      .myth-row       { grid-template-columns: 1fr; }
+      .detail-body    { grid-template-columns: 1fr; }
+      .form-row       { grid-template-columns: 1fr; }
+      .detail-block   { border-right: none !important; }
+ 
+      .stats-bar  { gap: 24px; flex-direction: column; }
+      .cta-banner { flex-direction: column; text-align: center; }
+      .cta-banner h2 { font-size: 1.3rem; }
+ 
+      footer { flex-direction: column; text-align: center; padding: 28px 20px; }
+      footer ul { justify-content: center; flex-wrap: wrap; }
+    }
+ 
+    /* Small mobile (<=480px) */
+    @media (max-width: 480px) {
+      .tips-grid { grid-template-columns: 1fr; }
+      nav ul a { font-size: 0.72rem; padding: 4px 10px; }
+      .helpline-num { font-size: 0.85rem; padding: 7px 16px; }
+      table { font-size: 0.78rem; }
+      td, th { padding: 10px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="index.html">Mind<span>Space</span></a>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="what.html">What is MH?</a></li>
+    <li><a href="issues.html" class="active">Common Issues</a></li>
+    <li><a href="selfcare.html">Self-Care</a></li>
+    <li><a href="support.html">Get Support</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <div class="breadcrumb"><a href="index.html">Home</a> &rsaquo; Common Issues</div>
+  <h1>Common Mental<br><em>Health Issues</em></h1>
+  <p>A detailed overview of widespread mental health conditions. Use the tabs below to explore each condition individually.</p>
+</div>
+
+<section>
+  <span class="section-label">Browse by Condition</span>
+  <h2 class="section-title">Mental Health Conditions</h2>
+  <p class="section-desc">Click a tab to see detailed information about that condition, or view all in the overview table.</p>
+
+  <!-- Panels FIRST so :target sibling trick works -->
+  <div id="tab-depression" class="tab-panel">
+    <div class="detail-card">
+      <div class="detail-header">
+        <span class="detail-tag">😔 Mood Disorder</span>
+        <h2>Depression</h2>
+        <p>More than just sadness — depression is a serious medical condition affecting how a person feels, thinks, and handles daily life.</p>
+      </div>
+      <div class="detail-body">
+        <div class="detail-block">
+          <h4>Common Symptoms</h4>
+          <ul>
+            <li>Persistent sadness or emptiness</li>
+            <li>Loss of interest in daily activities</li>
+            <li>Fatigue and low energy</li>
+            <li>Changes in sleep or appetite</li>
+            <li>Feelings of worthlessness or guilt</li>
+            <li>Difficulty concentrating</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Root Causes</h4>
+          <ul>
+            <li>Brain chemistry imbalances</li>
+            <li>Family history of depression</li>
+            <li>Traumatic or stressful life events</li>
+            <li>Chronic physical illness</li>
+            <li>Social isolation and loneliness</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Treatment Options</h4>
+          <ul>
+            <li>Cognitive Behavioral Therapy (CBT)</li>
+            <li>Antidepressant medications</li>
+            <li>Regular physical exercise</li>
+            <li>Social support and peer groups</li>
+            <li>Mindfulness and meditation</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>How to Help Someone</h4>
+          <ul>
+            <li>Listen without judgment</li>
+            <li>Encourage professional help gently</li>
+            <li>Check in regularly</li>
+            <li>Avoid saying "just cheer up"</li>
+            <li>Help with small daily tasks</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-anxiety" class="tab-panel">
+    <div class="detail-card">
+      <div class="detail-header">
+        <span class="detail-tag">😰 Anxiety Disorder</span>
+        <h2>Anxiety Disorders</h2>
+        <p>Anxiety is a normal emotion, but anxiety disorders involve excessive, persistent fear or worry that interferes with daily life.</p>
+      </div>
+      <div class="detail-body">
+        <div class="detail-block">
+          <h4>Types of Anxiety</h4>
+          <ul>
+            <li>Generalized Anxiety Disorder (GAD)</li>
+            <li>Social Anxiety Disorder</li>
+            <li>Panic Disorder</li>
+            <li>Specific Phobias</li>
+            <li>Separation Anxiety</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Physical Symptoms</h4>
+          <ul>
+            <li>Racing or pounding heartbeat</li>
+            <li>Shortness of breath</li>
+            <li>Sweating and trembling</li>
+            <li>Nausea or stomach issues</li>
+            <li>Dizziness or lightheadedness</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Psychological Symptoms</h4>
+          <ul>
+            <li>Constant, uncontrollable worry</li>
+            <li>Fear of the worst happening</li>
+            <li>Difficulty relaxing or sleeping</li>
+            <li>Irritability and restlessness</li>
+            <li>Avoidance of triggering situations</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Management Strategies</h4>
+          <ul>
+            <li>Cognitive Behavioral Therapy (CBT)</li>
+            <li>Deep breathing and grounding</li>
+            <li>Limiting caffeine and alcohol</li>
+            <li>Regular exercise routine</li>
+            <li>Anti-anxiety medication if needed</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-stress" class="tab-panel">
+    <div class="detail-card">
+      <div class="detail-header">
+        <span class="detail-tag">💤 Common Condition</span>
+        <h2>Stress & Burnout</h2>
+        <p>Chronic stress from academic or work environments can lead to burnout — complete emotional, physical, and mental exhaustion.</p>
+      </div>
+      <div class="detail-body">
+        <div class="detail-block">
+          <h4>Signs of Burnout</h4>
+          <ul>
+            <li>Constant exhaustion even after sleep</li>
+            <li>Feeling detached or cynical</li>
+            <li>Reduced performance and motivation</li>
+            <li>Frequent headaches or body aches</li>
+            <li>Emotional numbness</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Common Triggers</h4>
+          <ul>
+            <li>Academic or work overload</li>
+            <li>Lack of control over situations</li>
+            <li>Poor study-life balance</li>
+            <li>Unclear expectations</li>
+            <li>Toxic environments</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Recovery Steps</h4>
+          <ul>
+            <li>Take intentional breaks and rest</li>
+            <li>Set clear boundaries on study time</li>
+            <li>Talk to a counsellor or mentor</li>
+            <li>Focus on energy-restoring activities</li>
+            <li>Prioritize sleep and nutrition</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Prevention Tips</h4>
+          <ul>
+            <li>Learn to say no without guilt</li>
+            <li>Delegate tasks when possible</li>
+            <li>Schedule regular "off" time</li>
+            <li>Build a support network</li>
+            <li>Recognize early warning signs</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-ocd" class="tab-panel">
+    <div class="detail-card">
+      <div class="detail-header">
+        <span class="detail-tag">🔄 OCD</span>
+        <h2>OCD (Obsessive-Compulsive Disorder)</h2>
+        <p>Unwanted recurring thoughts (obsessions) and repetitive behaviors (compulsions) performed to ease the distress they cause.</p>
+      </div>
+      <div class="detail-body">
+        <div class="detail-block">
+          <h4>Common Obsessions</h4>
+          <ul>
+            <li>Fear of contamination or germs</li>
+            <li>Fear of harming yourself or others</li>
+            <li>Need for symmetry or exactness</li>
+            <li>Intrusive, disturbing thoughts</li>
+            <li>Fear of losing important things</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Common Compulsions</h4>
+          <ul>
+            <li>Excessive handwashing or cleaning</li>
+            <li>Checking locks or appliances repeatedly</li>
+            <li>Counting, tapping, arranging objects</li>
+            <li>Seeking reassurance constantly</li>
+            <li>Mental rituals like repeating words</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Treatment</h4>
+          <ul>
+            <li>Exposure and Response Prevention (ERP)</li>
+            <li>Cognitive Behavioral Therapy</li>
+            <li>SSRI medications</li>
+            <li>Support groups</li>
+            <li>Mindfulness-based approaches</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Important Notes</h4>
+          <ul>
+            <li>OCD is NOT a personality trait</li>
+            <li>People know their fears are irrational</li>
+            <li>It can be managed with treatment</li>
+            <li>Early help leads to better outcomes</li>
+            <li>OCD does not define who you are</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-bipolar" class="tab-panel">
+    <div class="detail-card">
+      <div class="detail-header">
+        <span class="detail-tag">⚡ Mood Disorder</span>
+        <h2>Bipolar Disorder</h2>
+        <p>Extreme shifts between emotional highs (mania) and lows (depression), often with stable periods in between.</p>
+      </div>
+      <div class="detail-body">
+        <div class="detail-block">
+          <h4>Manic Episode Signs</h4>
+          <ul>
+            <li>Unusually high energy or euphoria</li>
+            <li>Reduced need for sleep</li>
+            <li>Racing thoughts and rapid speech</li>
+            <li>Inflated self-esteem</li>
+            <li>Impulsive or risky decisions</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Depressive Episode Signs</h4>
+          <ul>
+            <li>Deep sadness and hopelessness</li>
+            <li>Loss of energy and motivation</li>
+            <li>Difficulty concentrating</li>
+            <li>Changes in sleep and appetite</li>
+            <li>Thoughts of death or suicide</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Types of Bipolar</h4>
+          <ul>
+            <li>Bipolar I — full manic episodes</li>
+            <li>Bipolar II — hypomania + depression</li>
+            <li>Cyclothymia — milder but chronic</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Treatment</h4>
+          <ul>
+            <li>Mood stabilizers (lithium etc.)</li>
+            <li>Psychotherapy and family therapy</li>
+            <li>Regular sleep and routine</li>
+            <li>Avoiding alcohol and triggers</li>
+            <li>Ongoing psychiatric monitoring</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-ptsd" class="tab-panel">
+    <div class="detail-card">
+      <div class="detail-header">
+        <span class="detail-tag">🌩️ Trauma-Related</span>
+        <h2>PTSD</h2>
+        <p>Post-Traumatic Stress Disorder can develop after experiencing trauma. It is not a sign of weakness — it is the mind's response to overwhelming stress.</p>
+      </div>
+      <div class="detail-body">
+        <div class="detail-block">
+          <h4>Common Triggers</h4>
+          <ul>
+            <li>Physical or sexual abuse</li>
+            <li>Accidents or natural disasters</li>
+            <li>War or violence</li>
+            <li>Childhood neglect or trauma</li>
+            <li>Sudden loss of a loved one</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Symptoms</h4>
+          <ul>
+            <li>Flashbacks and intrusive memories</li>
+            <li>Nightmares about the event</li>
+            <li>Emotional numbness or detachment</li>
+            <li>Always feeling "on guard"</li>
+            <li>Avoiding people or reminders</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Treatments</h4>
+          <ul>
+            <li>EMDR therapy</li>
+            <li>Trauma-focused CBT</li>
+            <li>Prolonged Exposure Therapy</li>
+            <li>Medication for anxiety/depression</li>
+            <li>Safe, structured support groups</li>
+          </ul>
+        </div>
+        <div class="detail-block">
+          <h4>Supporting Someone</h4>
+          <ul>
+            <li>Never force them to talk about trauma</li>
+            <li>Be patient — healing is not linear</li>
+            <li>Learn and respect their triggers</li>
+            <li>Encourage professional help gently</li>
+            <li>Take care of your own well-being too</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALL TABLE (default) — must be AFTER the :target panels -->
+  <div id="tab-all" class="tab-panel">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Condition</th>
+            <th>Category</th>
+            <th>Key Symptoms</th>
+            <th>Common Causes</th>
+            <th>Treatment</th>
+            <th>Prevalence</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>😔 Depression</td>
+            <td><span class="badge b-mood">Mood Disorder</span></td>
+            <td>Persistent sadness, loss of interest, fatigue, hopelessness</td>
+            <td>Brain chemistry, trauma, genetics, isolation</td>
+            <td>Therapy, medication, exercise</td>
+            <td>~280M globally</td>
+          </tr>
+          <tr>
+            <td>😰 Anxiety</td>
+            <td><span class="badge b-anxiety">Anxiety</span></td>
+            <td>Excessive worry, panic attacks, rapid heartbeat, avoidance</td>
+            <td>Genetics, brain chemistry, stressful life events</td>
+            <td>CBT, medication, mindfulness</td>
+            <td>~301M globally</td>
+          </tr>
+          <tr>
+            <td>💤 Stress & Burnout</td>
+            <td><span class="badge b-common">Common</span></td>
+            <td>Exhaustion, irritability, poor concentration, detachment</td>
+            <td>Work/study overload, poor work-life balance</td>
+            <td>Rest, boundaries, counselling</td>
+            <td>Affects 77% of adults</td>
+          </tr>
+          <tr>
+            <td>🔄 OCD</td>
+            <td><span class="badge b-ocd">OCD</span></td>
+            <td>Intrusive thoughts, repetitive behaviors (cleaning, checking)</td>
+            <td>Brain differences, genetics, stressful events</td>
+            <td>ERP therapy, SSRIs</td>
+            <td>~1 in 40 people</td>
+          </tr>
+          <tr>
+            <td>⚡ Bipolar Disorder</td>
+            <td><span class="badge b-mood">Mood Disorder</span></td>
+            <td>Extreme mood swings — mania (euphoria) and depression</td>
+            <td>Genetics, brain structure, stress triggers</td>
+            <td>Mood stabilizers, therapy</td>
+            <td>~40M globally</td>
+          </tr>
+          <tr>
+            <td>🌩️ PTSD</td>
+            <td><span class="badge b-trauma">Trauma</span></td>
+            <td>Flashbacks, nightmares, hypervigilance, numbness</td>
+            <td>Trauma — accidents, abuse, war, disasters</td>
+            <td>EMDR, trauma therapy</td>
+            <td>~3.9% of population</td>
+          </tr>
+          <tr>
+            <td>📱 Social Anxiety</td>
+            <td><span class="badge b-anxiety">Anxiety</span></td>
+            <td>Fear of social situations, self-consciousness, avoidance</td>
+            <td>Genetics, negative social experiences</td>
+            <td>CBT, exposure therapy</td>
+            <td>~7% of population</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Tab Nav AFTER panels so sibling CSS trick works -->
+  <div class="tab-bar" style="margin-top: 30px;">
+    <a href="#tab-all">All Issues</a>
+    <a href="#tab-depression">😔 Depression</a>
+    <a href="#tab-anxiety">😰 Anxiety</a>
+    <a href="#tab-stress">💤 Stress & Burnout</a>
+    <a href="#tab-ocd">🔄 OCD</a>
+    <a href="#tab-bipolar">⚡ Bipolar</a>
+    <a href="#tab-ptsd">🌩️ PTSD</a>
+  </div>
+
+</section>
+
+<div class="cta-banner">
+  <h2>Explore self-care tips and myth-busting facts.</h2>
+  <a href="selfcare.html" class="btn-white">Go to Self-Care →</a>
+</div>
+
+<footer>
+  <span class="footer-logo">Mind<span>Space</span></span>
+  <span>© 2025 MindSpace — Mental Health Awareness Project</span>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="what.html">About MH</a></li>
+    <li><a href="selfcare.html">Self-Care</a></li>
+    <li><a href="support.html">Support</a></li>
+  </ul>
+</footer>
+
+</body>
+</html>
