@@ -419,11 +419,6 @@ td:first-child { font-weight: 600; color: #1a1a1a; }
 
 /* Badges (issues table) */
 .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 500; }
-.b-mood    { background: #fde8e0; color: #c0392b; }
-.b-anxiety { background: #fdf3d0; color: #9a6a00; }
-.b-trauma  { background: #e8e0fd; color: #5e2ba8; }
-.b-ocd     { background: #e0f0fd; color: #1a6eaa; }
-.b-common  { background: #e8f5f2; color: #2e7d62; }
 
 /* Free badge (support table) */
 .free { background: #e8f5f2; color: #2e7d62; padding: 2px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; }
